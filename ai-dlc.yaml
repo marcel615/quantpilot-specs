@@ -1,0 +1,89 @@
+schema_version: 2
+active_service: quantpilot
+
+orchestrator:
+  repository: marcel615/quantpilot-specs
+  default_branch: main
+
+services:
+  quantpilot:
+    repositories:
+      common:
+        enabled: true
+        repository: marcel615/quantpilot-specs
+        default_branch: main
+      analytics:
+        enabled: true
+        repository: marcel615/quantpilot-analytics
+        default_branch: develop
+      backend:
+        enabled: true
+        repository: marcel615/quantpilot-spring
+        default_branch: develop
+      frontend:
+        enabled: true
+        repository: marcel615/quantpilot-react
+        default_branch: develop
+
+    work_tracking:
+      provider: jira
+
+    jira:
+      site_url: https://marcel615.atlassian.net
+      project_key: QP
+      issue_types:
+        candidate: Task
+        implementation: Task
+        epic: Epic
+        contract: Task
+      statuses:
+        candidate: 아이디어 후보
+        backlog: 할 일
+        ready: 착수 가능
+        in_progress: 진행 중
+        in_review: 검토 중
+        done: 완료
+      role_labels:
+        specs: 'area:specs'
+        analytics: 'area:analytics'
+        backend: 'area:backend'
+        frontend: 'area:frontend'
+      approval: user_transition_to_backlog
+      priority_order: [Highest, High, Medium, Low, Lowest]
+
+    confluence:
+      enabled: true
+      site_url: https://marcel615.atlassian.net/wiki
+      space_key: QP
+      parent_page_id: '3866634'
+
+    # 아래 경로는 최초 승인 후 공식 원본으로 사용할 위치다.
+    requirements:
+      repository_role: common
+      path: docs/requirements.md
+      format: markdown
+
+    contracts:
+      analytics:
+        repository_role: common
+        path: docs/analytics-spec.md
+        format: markdown
+      api:
+        repository_role: common
+        path: docs/openapi.yaml
+        format: openapi
+      authentication:
+        repository_role: common
+        path: docs/auth-policy.md
+        format: markdown
+      erd:
+        repository_role: common
+        path: docs/schema.dbml
+        format: dbml
+      ui:
+        repository_role: common
+        path: docs/ui-spec.md
+        format: markdown
+
+    review:
+      state_file: integration-review-state.json
