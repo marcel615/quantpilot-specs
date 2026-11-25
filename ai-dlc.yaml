@@ -57,6 +57,7 @@ services:
       space_key: QP
       parent_page_id: '4161542'
       contract_parent_page_id: '4161550'
+      discussion_parent_page_id: '6488065'
 
     # 아래 경로는 최초 승인 후 공식 원본으로 사용할 위치다.
     requirements:
